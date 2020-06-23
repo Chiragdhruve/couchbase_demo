@@ -26,15 +26,16 @@ var appRouter = function(app) {
             if(error) {
                 return res.status(400).send(error);
             }
+            console.log("result is ",result);
             res.send(result);
         });
     });
 
-    app.get("/api/get", function(req, res) {
-        if(!req.query.document_id) {
+    app.get("/api/get/:document_id", function(req, res) {
+        if(!req.params.document_id) {
             return res.status(400).send({"status": "error", "message": "A document id is required"});
         }
-        RecordModel.getByDocumentId(req.query.document_id, function(error, result) {
+        RecordModel.getByDocumentId(req.params.document_id, function(error, result) {
             if(error) {
                 return res.status(400).send(error);
             }

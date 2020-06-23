@@ -15,7 +15,15 @@ app.use(function(req, res, next) {
 });
 
 // Global declaration of the Couchbase server and bucket to be used
-module.exports.bucket = (new couchbase.Cluster(process.env.COUCHBASE_HOST || config.couchbase.server)).openBucket(process.env.COUCHBASE_BUCKET || config.couchbase.bucket);
+// module.exports.bucket = (new couchbase.Cluster(process.env.COUCHBASE_HOST || config.couchbase.server)).openBucket(process.env.COUCHBASE_BUCKET || config.couchbase.bucket);
+
+
+
+const cluster = new couchbase.Cluster("localhost");
+cluster.authenticate({ username: 'Administrator', password: "123456" });
+const bucket = cluster.openBucket("restful-sample");
+module.exports = bucket;
+module.exports.bucket = bucket;
 
 // var couchbase = require('couchbase');
 // const cluster = new couchbase.Cluster("couchbase://localhost:8091/", {
